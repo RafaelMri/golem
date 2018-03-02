@@ -1,6 +1,7 @@
 import json
 import os
 from random import random, randint
+from unittest import mock
 from unittest.mock import patch
 
 from freezegun import freeze_time
@@ -301,11 +302,13 @@ class TestKeysAuthKeystore(testutils.TempDirFixture):
         password = 'passwd'
 
         # Generate new key
-        KeysAuth(
-            datadir=self.path,
-            private_key_name=key_name,
-            password=password,
-        )
+        with mock.patch.dict('ethereum.keys.PBKDF2_CONSTANTS', {'c': 1}):
+            KeysAuth(
+                datadir=self.path,
+                private_key_name=key_name,
+                password=password,
+            )
+
         # Try to load it, this shouldn't throw
         KeysAuth(
             datadir=self.path,
