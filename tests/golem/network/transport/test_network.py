@@ -238,10 +238,10 @@ class TestNetwork(TestWithReactor):
         self.port = None
         self.listen_success = False
 
-    def __connection_success(self, result, **kwargs):
+    def __connection_success(self, conn_id, result, **kwargs):
         self.connect_success = True
 
-    def __connection_failure(self, **kwargs):
+    def __connection_failure(self, conn_id, **kwargs):
         self.connect_success = False
 
     def __stop_listening_success(self, **kwargs):
